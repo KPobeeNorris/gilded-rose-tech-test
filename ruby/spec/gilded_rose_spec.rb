@@ -5,9 +5,9 @@ describe GildedRose do
   describe "#update_quality" do
 
     it "does not change the name" do
-      items = [Item.new("foo", 0, 0)]
+      items = [Item.new("magic stuff", 0, 0)]
       GildedRose.new(items).update_quality()
-      expect(items[0].name).to eq "foo"
+      expect(items[0].name).to eq "magic stuff"
     end
 
     it 'does not allow an item to have a quality score greater than 50' do
@@ -56,6 +56,14 @@ describe GildedRose do
       GildedRose.new(items).update_quality()
       GildedRose.new(items).update_quality()
       expect(items[0].quality).to eq 30
+    end
+
+    it "'Aged Brie' continues to increase in quality the older it gets" do
+      items = [Item.new("Aged Brie", 0, 10)]
+      GildedRose.new(items).update_quality()
+      GildedRose.new(items).update_quality()
+      GildedRose.new(items).update_quality()
+      expect(items[0].quality).to eq 16
     end
 
   end
