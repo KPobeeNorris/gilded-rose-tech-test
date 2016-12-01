@@ -48,7 +48,7 @@ describe GildedRose do
       expect(items[0].quality).to eq 0
     end
 
-    it "does not expect 'Sulfuras' to ever be sold, or it's quality decrease" do
+    it "does not expect 'Sulfuras' to ever be sold, or for it's quality decrease" do
       items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 30)]
       GildedRose.new(items).update_quality()
       GildedRose.new(items).update_quality()
@@ -64,6 +64,22 @@ describe GildedRose do
       GildedRose.new(items).update_quality()
       GildedRose.new(items).update_quality()
       expect(items[0].quality).to eq 16
+    end
+
+    it "for generic items, the quality degrades by one until the sell-in reaches 0" do
+      items = [Item.new("+5 Dexterity Vest", 5, 30)]
+      GildedRose.new(items).update_quality()
+      GildedRose.new(items).update_quality()
+      expect(items[0].quality).to eq 28
+    end
+
+    it "for generic items, the quality degrades twice as fast after the sell by date has passed" do
+      items = [Item.new("Elixir of the Mongoose", 1, 21)]
+      GildedRose.new(items).update_quality()
+      GildedRose.new(items).update_quality()
+      GildedRose.new(items).update_quality()
+      GildedRose.new(items).update_quality()
+      expect(items[0].quality).to eq 14
     end
 
   end
